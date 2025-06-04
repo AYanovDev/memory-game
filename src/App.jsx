@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import "./App.css";
 import Card from "./card";
 import Header from "./header";
@@ -22,19 +22,22 @@ function App() {
   ]);
 
   const [score, setScore] = useState(0);
+  const bestScore = useRef(0);
 
   function renderCards() {
     return data.map((e) => {
       function onCardClick() {
         shuffleData();
         if (dataLog.includes(e)) {
+          if (bestScore.current < score) {
+            bestScore.current = score;
+          }
           setScore(0);
           dataLog.length = 0;
-          console.log(dataLog);
+          // use useRef hook here
         } else {
           setScore((previousScore) => previousScore + 1);
           dataLog.push(e);
-          console.log(dataLog);
         }
       }
       return <Card key={e} name={e} onClick={onCardClick}></Card>;
@@ -54,7 +57,7 @@ function App() {
       <Header></Header>
       <div className="counter_container">
         <p>Score:{score}</p>
-        <p>Best score:</p>
+        <p>Best score:{bestScore.current}</p>
       </div>
       <div className="cardsContainer">{renderCards()}</div>
     </>
