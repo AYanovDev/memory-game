@@ -1,4 +1,27 @@
 .card {
-  border: 1px black dashed;
-  min-height: 150px;
+  background-color: #e0e0e0;
+  border-radius: 12px;
+  padding: 1rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  cursor: pointer;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  background-color: #d5d5d5;
+}
+
+.card .word {
+  font-weight: bold;
+  font-size: 1.1rem;
+  color: #222;
+  margin-bottom: 0.5rem;
+}
+
+.card .definition {
+  font-size: 0.95rem;
+  color: #555;
+  line-height: 1.4;
 }
