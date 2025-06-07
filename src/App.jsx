@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import "./App.css";
 import Card from "./card";
 import Header from "./header";
+import Win from "./win";
 
 const dataLog = [];
 
@@ -22,19 +23,29 @@ function App() {
   ]);
 
   const [score, setScore] = useState(0);
-  const bestScore = useRef(0);
+  const [bestScore, setBestScore] = useState(0);
+
+  useEffect(() => {
+    if (localStorage.getItem("bestScore")) {
+      setBestScore(localStorage.getItem("bestScore"));
+    }
+  }, []);
+
+  // const bestScore = useRef(0); // use a state and save it so that it stays after a refresh
 
   function renderCards() {
     return data.map((e) => {
       function onCardClick() {
         shuffleData();
+
+        // score keeping logic
         if (dataLog.includes(e)) {
-          if (bestScore.current < score) {
-            bestScore.current = score;
+          if (bestScore < score) {
+            setBestScore(score);
+            localStorage.setItem("bestScore", score);
           }
           setScore(0);
           dataLog.length = 0;
-          // use useRef hook here
         } else {
           setScore((previousScore) => previousScore + 1);
           dataLog.push(e);
@@ -52,14 +63,21 @@ function App() {
     setData(shuffledArr);
   }
 
+  function renderWin() {
+    if (score === 12) {
+      return <Win></Win>;
+    }
+  }
+
   return (
     <>
       <Header></Header>
       <div className="counter_container">
         <p>Score:{score}</p>
-        <p>Best score:{bestScore.current}</p>
+        <p>Best score:{bestScore}</p>
       </div>
       <div className="cardsContainer">{renderCards()}</div>
+      {renderWin()}
     </>
   );
 }
