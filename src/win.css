@@ -1,0 +1,30 @@
+.win {
+  position: absolute;
+  bottom: 0%;
+  left: 0%;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(224, 224, 224, 0.5);
+}
+
+.text_and_button {
+  width: 100%;
+  background-color: white;
+  position: absolute;
+  top: 35%;
+}
+
+.win_text {
+  text-align: center;
+  font-size: 50px;
+  font-weight: bold;
+}
+
+.play_button {
+  margin-left: 50%;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  transform: translateX(-50%);
+  height: 35px;
+  font-size: 15px;
+}

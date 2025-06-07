@@ -3,8 +3,10 @@ import "./App.css";
 import Card from "./card";
 import Header from "./header";
 import Win from "./win";
+import Loss from "./loss";
 
 const dataLog = [];
+let isLoss = false;
 
 function App() {
   const [data, setData] = useState([
@@ -31,8 +33,6 @@ function App() {
     }
   }, []);
 
-  // const bestScore = useRef(0); // use a state and save it so that it stays after a refresh
-
   function renderCards() {
     return data.map((e) => {
       function onCardClick() {
@@ -46,6 +46,7 @@ function App() {
           }
           setScore(0);
           dataLog.length = 0;
+          isLoss = true;
         } else {
           setScore((previousScore) => previousScore + 1);
           dataLog.push(e);
@@ -64,8 +65,17 @@ function App() {
   }
 
   function renderWin() {
-    if (score === 12) {
+    if (score === 5) {
+      localStorage.setItem("bestScore", 12);
       return <Win></Win>;
+    }
+  }
+
+  function renderLoss() {
+    console.log(isLoss);
+    if (isLoss) {
+      return <Loss></Loss>;
+      isLoss = false;
     }
   }
 
@@ -78,6 +88,7 @@ function App() {
       </div>
       <div className="cardsContainer">{renderCards()}</div>
       {renderWin()}
+      {renderLoss()}
     </>
   );
 }
